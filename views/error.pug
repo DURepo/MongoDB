@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	.container
+		.jumbotron
+			h2.b.align.center Page Not Found
+			hr.my-4
+			pre #{error.stack}
+			pre #{error.message}
+			
+

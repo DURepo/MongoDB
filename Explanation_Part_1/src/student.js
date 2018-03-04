@@ -11,7 +11,7 @@ StudentSchema = new schema({
             validator: (name) => name.length > 2 ,
             message: 'Name must be longer than 2 characters'
         },
-        require: [true, 'Name is Required.']
+        required: [true, 'Name is Required.']
     },
     postCount: Number
 })

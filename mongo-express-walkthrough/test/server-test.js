@@ -22,13 +22,8 @@ describe("ToDo - POST Tests", () => {
             expect(res).to.exist
             expect(res.status).to.equal(200)
             expect(res.body.text).to.equal(testTask.text)
-        })
-        Task.find().limit(1).sort({$natural:-1}).then((tasks) => {
-            expect(tasks[0].text).to.equal(testTask.text)
-            globalID = tasks[0]._id
+            globalID = res.body._id
             done()
-        }, (err) => {
-            done(err)
         })
     })
 })
@@ -44,7 +39,7 @@ describe("ToDo = GET tests", () => {
             done()
         })
     })
-
+    
     it("should get a task with an id", (done) => {
         superagent.get(`${BASE_URL}/tasks/${globalID}`)
         .end((err, res) => {
@@ -55,22 +50,22 @@ describe("ToDo = GET tests", () => {
             done()
         })
     })
-
+    
     var incorrectID = '69fbb253d72a3723043967b4'
-
+    
     it("should return 400 if id not found", (done) => {
         superagent.get(`${BASE_URL}/tasks/${incorrectID}`)
         .end((err, res) => {
             // expect(err).to.not.exist
             // expect(res).to.exist
-            expect(res.status).to.equal(400)
+            expect(res.status).to.equal(404)
             done()
         })
     })
 })
 
 describe("ToDo - DELETE tests", () => {
-
+    
     it("should delete a task with an id", (done) => {
         superagent.delete(`${BASE_URL}/tasks/${globalID}`)
         .end((err, res) => {
@@ -81,9 +76,9 @@ describe("ToDo - DELETE tests", () => {
             done()
         })
     })
-
+    
     var incorrectID = '69fbb253d72a3723043967b4'
-
+    
     it("should return 404 if id not found", (done) => {
         superagent.delete(`${BASE_URL}/tasks/${incorrectID}`)
         .end((err, res) => {
@@ -100,34 +95,41 @@ describe("ToDo - PATCH(UPDATE) tests", () => {
         text: 'Hello from test',
         completed: true
     }
-
+    let _id = ''
+    
     it("should update a task with an id", (done) => {
-        superagent.patch(`${BASE_URL}/tasks/59fbe61cb347734c703762b9`)
+        superagent.post(`${BASE_URL}/tasks`)
         .send(testUpdate)
         .set('accept', 'json')
         .end((err, res) => {
-            console.log(res.body.task.completed)
-            expect(err).to.not.exist
-            expect(res.status).to.equal(200)
-            expect(res.body.task.completed).to.equal(true)
-            expect(res.body.task.text).to.equal(testUpdate.text)
-            done()
+            _id = res.body._id
+            superagent.patch(`${BASE_URL}/tasks/${_id}`)
+            .send(testUpdate)
+            .set('accept', 'json')
+            .end((err, res) => {
+                expect(err).to.not.exist
+                expect(res.status).to.equal(200)
+                expect(res.body.task.completed).to.equal(true)
+                expect(res.body.task.text).to.equal(testUpdate.text)
+                done()
+            })
         })
     })
-
+    
     var testUpdate2 = {
         completed: false
     }
-
+    
     it("should update completedAt to null when completed is false", (done) => {
-        superagent.patch(`${BASE_URL}/tasks/59fbe61cb347734c703762b9`)
+        superagent.patch(`${BASE_URL}/tasks/${_id}`)
         .send(testUpdate2)
         .set('accept', 'json')
         .end((err, res) => {
             expect(err).to.not.exist
             expect(res.status).to.equal(200)
             expect(res.body.task.completedAt).to.equal(null)
-            done()
+            superagent.delete(`${BASE_URL}/tasks/${_id}`).end(() => { done() })
+            // done()
         })
-    })    
+    })
 })

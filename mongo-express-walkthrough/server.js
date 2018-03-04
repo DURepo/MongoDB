@@ -29,12 +29,12 @@ app.get('/tasks/:id', (req, res) => {
     const { id } = req.params
     
     if (!ObjectID.isValid(id)) {
-        return res.sendStatus(400)
+        return res.sendStatus(404)
     }
     
     Task.findById(id)
     .then((task) => {
-        if(!task) { return res.sendStatus(400) }
+        if(!task) { return res.sendStatus(404) }
         
         res.send({ task })
     })

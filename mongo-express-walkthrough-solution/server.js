@@ -34,7 +34,7 @@ app.get('/tasks/:id', (req, res) => {
     
     Task.findById(id)
     .then((task) => {
-        if(!task) { return res.sendStatus(400) }
+        if(!task) { return res.sendStatus(404) }
         
         res.send({ task })
     })
@@ -65,7 +65,7 @@ app.patch('/tasks/:id', (req, res) => {
     let body = _.pick(req.body, ['text', 'completed'])
     
     if (!ObjectID.isValid(id)) {
-        return res.sendStatus(404)
+        return res.sendStatus(400)
     }
     
     if (body.completed && _.isBoolean(body.completed)) {
@@ -78,7 +78,7 @@ app.patch('/tasks/:id', (req, res) => {
     Task.findByIdAndUpdate(id, {$set: body}, {new: true})
     .then((task) => {
         if (!task) { return res.sendStatus(404) }
-        
+
         res.send({ task })
     })
     .catch((err) => { res.sendStatus(400) })

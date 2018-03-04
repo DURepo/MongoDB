@@ -30,7 +30,7 @@ router.get('/tweets', function (req, res, next) {
 
 router.get('/tweetContent/:tweetContent', function (req, res, next) {
     let tweetContent = req.params.tweetContent
-    //  return tweets based on tweet conetent like
+    //  return tweets based on tweet content like
     Tweet.find({ tweetContent: new RegExp(tweetContent, 'i') })
         .then((data) => {
             res.send(data);

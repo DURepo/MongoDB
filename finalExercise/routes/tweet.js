@@ -13,13 +13,13 @@ router.get('/tweets', function (req, res, next) {
 
     //res.send(data);
 
-    //  if there is time    // return recent tweets based on postedDate (sort) 
+    //  optional   // return recent tweets based on postedDate (sort) 
 
 });
 
 router.get('/tweetContent/:tweetContent', function (req, res, next) {
     let tweetContent = req.params.tweetContent
-    //  return tweets based on tweet conetent like
+    //  return tweets based on tweet content like
 
     //res.send(data);
 });

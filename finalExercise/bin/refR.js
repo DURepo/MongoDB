@@ -25,6 +25,14 @@ router.get('/tweets', function (req, res, next) {
         })
         .catch((err) => {
             console.log(err);
+        })
+    Tweet.aggregate([{ $sort: { postedDate: -1 } }])
+        .then((data) => {
+            console.log(data);
+            res.send(data);
+        })
+        .catch((err) => {
+            console.log(err);
         })*/
 });
 

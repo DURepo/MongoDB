@@ -6,14 +6,12 @@ describe('Validating Records', () => {
 
         const student = new Student({name: undefined});
 
-        const validationResult  =  student.validateSync();
-        // console.log(validationResult)        
+        const validationResult  =  student.validateSync();     
 
         const message = validationResult.errors.name.message;
         //const { message }  = validationResult.errors.name;         this is line is same as above line ES6 notation
-        console.log(message)
-        assert(message === 'Name is Required.');
-    
+
+        assert(message === 'Name is Required.');  
 
     })
 

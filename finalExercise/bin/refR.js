@@ -25,12 +25,20 @@ router.get('/tweets', function (req, res, next) {
         })
         .catch((err) => {
             console.log(err);
+        })
+    Tweet.aggregate([{ $sort: { postedDate: -1 } }])
+        .then((data) => {
+            console.log(data);
+            res.send(data);
+        })
+        .catch((err) => {
+            console.log(err);
         })*/
 });
 
 router.get('/tweetContent/:tweetContent', function (req, res, next) {
     let tweetContent = req.params.tweetContent
-    //  return tweets based on tweet conetent like
+    //  return tweets based on tweet content like
     Tweet.find({ tweetContent: new RegExp(tweetContent, 'i') })
         .then((data) => {
             res.send(data);

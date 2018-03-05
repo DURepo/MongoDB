@@ -7,12 +7,12 @@ describe('Validating Records', () => {
         const student = new Student({name: undefined});
 
         const validationResult  =  student.validateSync();
-        console.log(validationResult)        
+        // console.log(validationResult)        
 
         const message = validationResult.errors.name.message;
         //const { message }  = validationResult.errors.name;         this is line is same as above line ES6 notation
 
-        assert(message === 'Name is required');
+        assert(message === 'Name is Required.');
     
 
     })
@@ -20,7 +20,7 @@ describe('Validating Records', () => {
 
     it('requires student name longer than 2 character', () => {
         const student = new Student({name: 'Ab'});
-        const vlidationResult = student.validateSync();
+        const validationResult = student.validateSync();
         const { message }  = validationResult.errors.name; 
 
         assert(message === 'Name must be longer than 2 characters');

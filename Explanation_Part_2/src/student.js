@@ -8,11 +8,11 @@ StudentSchema = new schema({
     //name: String,
     name: {
         type: String,
-        validate:{
+        validate: {
             validator: (name) => name.length > 2 ,
             message: 'Name must be longer than 2 characters'
         },
-        require: [true, 'Name is Required.']
+        required: [true, 'Name is Required.']
     },
 
     posts: [PostSchema] , //list of subdocuments

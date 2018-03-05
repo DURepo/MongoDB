@@ -6,55 +6,54 @@ describe('Subdocuments', () => {
         const joe = new Student({
             name:'Joe', 
             posts: [{title: 'PostTitle'}]})
-    
-
-    joe.save()
-        .then( () => {
-            Student.findOne({name: 'Joe'})
+            
+            joe.save()
+            .then(() => { Student.findOne({name: 'Joe'})
             .then((student) => {
                 assert(student.posts[0].title === 'PostTitle');
                 done();
             })
+            .catch((err) => { console.log(err) })
         })
     });
-
-    it('adds sub docs to existing records', () => {
+    
+    it('adds sub docs to existing records', (done) => {
         const joe = new Student({
             name: 'Joe',
             posts: []
         });
-
+        
         joe.save()
-            .then( () => { Student.findOne({ name: 'Joe'})})
-            .then( (student) => {
-                student.posts.push({ title: 'New Post'});   //js array.push operation
-                return student.save(); //return save.. promise                 
-            } )
-            .then( () => student.findOne( {name: 'Joe'}))
-            .then((Student) => {
-                assert(student.posts[0].title[0].title === 'New Post');
-                done();
-            })
+        .then(() => Student.findOne({ name: 'Joe' }))
+        .then((student) => {
+            student.posts.push({ title: 'New Post' });
+            return student.save();
+        })
+        .then(() => Student.findOne({ name: 'Joe' }))
+        .then((student) => {
+            assert(student.posts[0].title === 'New Post');
+            done();
+        });
     })
-
-
-    it('removes a sub doc from existing document', () => {
+    
+    it('removes a sub doc from existing document', (done) => {
         const joe = new Student({
             name: 'Joe',
             posts: [{title: 'New Title'}]
         });
-
+        
         joe.save()
-            .then(() => Student.findOne({name: 'Joe'}))
-            .then((student) => {
-                const post  = student.posts[0];
-                post.remove();
-                return student.save();
-            })
-            .then(() => Student.findOne( { name: 'Joe'}))
-            .then((student) => {
-                assert(student.posts.length === 0);
-                done();
-            })
+        .then(() => Student.findOne({name: 'Joe'}))
+        .then((student) => {
+            const post  = student.posts[0];
+            post.remove();
+            return student.save();
+        })
+        .then(() => Student.findOne( { name: 'Joe'}))
+        .then((student) => {
+            assert(student.posts.length === 0);
+            done();
+        })
+        .catch((err) => { console.log(err) })
     })
 })

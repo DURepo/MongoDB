@@ -3,6 +3,17 @@ const mongoose = require('mongoose');
 
 const schema = mongoose.Schema;
 
+/**
+testSchema = new schema({
+    name: String
+});
+
+Creating model
+
+const testModel = mongoose.model('test_collection', testSchema)
+**/
+
+
 StudentSchema = new schema({
     //name: String,
     name: {

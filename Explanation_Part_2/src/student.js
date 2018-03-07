@@ -16,7 +16,7 @@ StudentSchema = new schema({
     },
 
     posts: [PostSchema] , //list of subdocuments
-    likes: Number
+    postCount: Number
 
 });
 

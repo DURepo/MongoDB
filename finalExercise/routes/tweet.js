@@ -32,19 +32,23 @@ router.get('/tweetUser/:tweetUser', function (req, res, next) {
 });
 
 router.post('/addTweet', function (req, res, next) {
+    let tweetUser = req.body.tweetUser;
+    let tweetContent = req.body.tweetContent;
     //  insert a tweet 
 
     // send the data to the view as a Json string, example: res.send(JSON.stringify(tweet));
 });
 
 router.post('/updateTweet', function (req, res, next) {
+    let tweetId = req.body.tweetId;
+    let tweetContent = req.body.tweetContent;
     // update the tweet content based on _id
 
     // send a JS object with check property set to true as a Json string like in the previous example
 });
 
 router.post('/deleteTweet', function (req, res, next) {
-    let tweetId = req.body.tweetId
+    let tweetId = req.body.tweetId;
     //  remove a tweet based on _id
 
     // send a JS object with check property set to true as a Json string like in the previous example

@@ -4,11 +4,10 @@ const Student = require('../src/student')
 describe('Update Records', () => {
     let joe;
     
-    beforeEach((done)=>{
+    beforeEach((done) => {
         joe = new Student({name:'Joe', postCount: 0})     //An _id is assigned here
         joe.save()
-        .then(()=>{done();})
-        
+        .then(() => { done() })
     });
     
     function assertName(operation, done){
@@ -49,7 +48,7 @@ describe('Update Records', () => {
     
     //CLASS BASED UPDATES
     //1.
-    it('A model class can update', (done)=> {
+    it('A model class can update', (done) => {
         assertName(
             Student.update({name: 'Joe'}, {name: 'Alex'}),
             done
@@ -58,16 +57,15 @@ describe('Update Records', () => {
     })
     
     //2.
-    it('A model class can update one record', (done)=> {
+    it('A model class can update one record', (done) => {
         assertName(
             Student.findOneAndUpdate({name: 'Joe'}, {name: 'Alex'}),
             done
         );
-        
     })
     
     //3.
-    it('A model class can find a record by ID and update', (done)=> {
+    it('A model class can find a record by ID and update', (done) => {
         assertName(
             Student.findByIdAndUpdate(joe._id, {name: 'Alex'}),
             done

@@ -1,6 +1,13 @@
 const assert = require('assert')
 const Student = require('../src/student')
 
+/**
+describe('description', () => {
+    it('what this does', () => {
+        assert(1+1 === 2 )
+    })
+})
+*/
 
 describe('Create records', () => {
     it('save operation', (done) => {

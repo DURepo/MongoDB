@@ -20,11 +20,6 @@ StudentSchema = new schema({
 
 });
 
-//uses getter and setter propery of ES6
-StudentSchema.virtual('postCount').get(function(){
-    return this.posts.length;
-});
-
 const Student = mongoose.model('students', StudentSchema);
 
 
